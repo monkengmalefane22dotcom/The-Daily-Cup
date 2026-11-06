@@ -1,7 +1,7 @@
-
 import { useState } from "react";
 import "./StaffDashboard.css";
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 function StaffDashboard({
   menuItems,
   setMenuItems,
@@ -51,7 +51,7 @@ function StaffDashboard({
 
       if (editingId !== null) {
         response = await fetch(
-          `http://localhost:5000/api/menu/${editingId}`,
+         `${API_URL}/api/menu/${editingId}`,
           {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
@@ -59,7 +59,7 @@ function StaffDashboard({
           }
         );
       } else {
-        response = await fetch("http://localhost:5000/api/menu", {
+        response = await fetch(`${API_URL}/api/menu`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(product),
@@ -115,7 +115,7 @@ function StaffDashboard({
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/menu/${id}`,
+      `${API_URL}/api/menu/${id}`,
         { method: "DELETE" }
       );
 
@@ -137,7 +137,7 @@ function StaffDashboard({
   async function toggleAvailability(item) {
     try {
       const response = await fetch(
-        `http://localhost:5000/api/menu/${item.id}`,
+        `${API_URL}/api/menu/${item.id}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -167,7 +167,7 @@ function StaffDashboard({
  async function updateOrderStatus(orderNumber, newStatus) {
   try {
     const response = await fetch(
-      `http://localhost:5000/api/orders/${orderNumber}`,
+     `${API_URL}/api/orders/${orderNumber}`,
       {
         method: "PUT",
         headers: {

@@ -8,6 +8,8 @@ import Checkout from "./pages/Checkout";
 import OrderConfirmation from "./pages/OrderConfirmation";
 import "./App.css";
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
 function App() {
   const [cartItems, setCartItems] = useState([]);
   const [showCheckout, setShowCheckout] = useState(false);
@@ -17,7 +19,7 @@ function App() {
 
   // Load menu items from backend
   useEffect(() => {
-    fetch("http://localhost:5000/api/menu")
+    fetch(`${API_URL}/api/menu`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Could not load menu.");
@@ -34,7 +36,7 @@ function App() {
 
   // Load customer orders from backend
   useEffect(() => {
-    fetch("http://localhost:5000/api/orders")
+   fetch(`${API_URL}/api/orders`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Could not load orders.");
@@ -97,7 +99,7 @@ function App() {
   // Place customer order through backend
   async function placeOrder(orderDetails) {
     try {
-      const response = await fetch("http://localhost:5000/api/orders", {
+    const response = await fetch(`${API_URL}/api/orders`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
