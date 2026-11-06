@@ -1,0 +1,132 @@
+.menu-section {
+  padding: 70px 7%;
+  background-color: #fffaf3;
+}
+
+.menu-heading {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.menu-heading > p {
+  color: #b87945;
+  letter-spacing: 3px;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.menu-heading h2 {
+  font-size: 36px;
+  color: #593b2c;
+  margin-bottom: 12px;
+}
+
+.menu-heading span {
+  color: #806b5c;
+}
+
+.category-buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 35px;
+}
+
+.category-buttons button {
+  padding: 10px 22px;
+  border: 1px solid #754c35;
+  border-radius: 25px;
+  background: transparent;
+  color: #754c35;
+  cursor: pointer;
+}
+
+.category-buttons button.active,
+.category-buttons button:hover {
+  background: #754c35;
+  color: white;
+}
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+}
+
+.menu-card {
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s;
+}
+
+.menu-card:hover {
+  transform: translateY(-5px);
+}
+
+.menu-card img {
+  width: 100%;
+  height: 210px;
+  object-fit: cover;
+}
+
+.menu-card-content {
+  padding: 20px;
+}
+
+.menu-category {
+  color: #b87945;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.menu-card h3 {
+  color: #593b2c;
+  margin-bottom: 10px;
+}
+
+.menu-description {
+  color: #806b5c;
+  font-size: 14px;
+  line-height: 1.6;
+  min-height: 45px;
+}
+
+.menu-card-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.menu-card-bottom strong {
+  color: #754c35;
+  font-size: 19px;
+}
+
+.menu-card-bottom button {
+  background: #754c35;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.menu-card-bottom button:hover {
+  background: #593b2c;
+}
+
+@media (max-width: 900px) {
+  .menu-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .menu-grid {
+    grid-template-columns: 1fr;
+  }
+}
