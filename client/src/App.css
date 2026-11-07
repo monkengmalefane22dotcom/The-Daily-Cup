@@ -92,3 +92,72 @@
     gap: 15px;
   }
 }
+
+/* About and Contact pages */
+
+.info-page {
+  min-height: 75vh;
+  padding: 80px 10%;
+  background: #fffaf3;
+  color: #5c4033;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.info-page h1 {
+  font-size: 42px;
+  color: #754c35;
+  margin-bottom: 25px;
+}
+
+.info-page p {
+  max-width: 750px;
+  font-size: 18px;
+  line-height: 1.9;
+  margin-bottom: 20px;
+  color: #6b5548;
+}
+
+.info-page h2 {
+  color: #9a6848;
+  font-size: 25px;
+  margin-top: 25px;
+}
+
+.info-page h3 {
+  color: #754c35;
+  font-size: 23px;
+  margin-bottom: 15px;
+}
+
+.info-page div {
+  background: #f3e5d5;
+  padding: 30px 45px;
+  border-radius: 15px;
+  margin-top: 20px;
+  width: 100%;
+  max-width: 500px;
+  box-sizing: border-box;
+  box-shadow: 0 4px 15px rgba(80, 50, 30, 0.08);
+}
+
+@media (max-width: 600px) {
+  .info-page {
+    padding: 55px 6%;
+  }
+
+  .info-page h1 {
+    font-size: 32px;
+  }
+
+  .info-page p {
+    font-size: 16px;
+  }
+
+  .info-page div {
+    padding: 25px 20px;
+  }
+}

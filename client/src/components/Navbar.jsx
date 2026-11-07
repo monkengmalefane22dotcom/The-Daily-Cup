@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "./Navbar.css";
 
 function Navbar({ cartCount = 0 }) {
@@ -9,15 +10,16 @@ function Navbar({ cartCount = 0 }) {
       </div>
 
       <div className="navbar-links">
-        <a href="#home">Home</a>
-        <a href="#menu">Menu</a>
-        <a href="#about">About</a>
-        <a href="#contact">Contact</a>
+        <Link to="/">Home</Link>
+        <Link to="/menu">Menu</Link>
+        <Link to="/staff-dashboard">Staff Dashboard</Link>
+        <Link to="/about">About</Link>
+        <Link to="/contact">Contact</Link>
       </div>
 
-      <a href="#cart" className="cart-button">
+      <Link to="/cart" className="cart-button">
         🛒 Cart ({cartCount})
-      </a>
+      </Link>
     </nav>
   );
 }

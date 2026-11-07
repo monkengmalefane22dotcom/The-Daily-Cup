@@ -1,16 +1,23 @@
-
 import { useState, useEffect } from "react";
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
+
 import StaffDashboard from "./pages/StaffDashboard";
 import Navbar from "./components/Navbar";
 import Menu from "./pages/Menu";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import OrderConfirmation from "./pages/OrderConfirmation";
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+
 import "./App.css";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 function App() {
+  const navigate = useNavigate();
+
   const [cartItems, setCartItems] = useState([]);
   const [showCheckout, setShowCheckout] = useState(false);
   const [completedOrder, setCompletedOrder] = useState(null);
@@ -26,29 +33,21 @@ function App() {
         }
         return response.json();
       })
-      .then((data) => {
-        setMenuItems(data);
-      })
-      .catch((error) => {
-        console.error("Error loading menu:", error);
-      });
+      .then((data) => setMenuItems(data))
+      .catch((error) => console.error("Error loading menu:", error));
   }, []);
 
   // Load customer orders from backend
   useEffect(() => {
-   fetch(`${API_URL}/api/orders`)
+    fetch(`${API_URL}/api/orders`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Could not load orders.");
         }
         return response.json();
       })
-      .then((data) => {
-        setOrders(data);
-      })
-      .catch((error) => {
-        console.error("Error loading orders:", error);
-      });
+      .then((data) => setOrders(data))
+      .catch((error) => console.error("Error loading orders:", error));
   }, []);
 
   // Add products to cart
@@ -61,18 +60,12 @@ function App() {
       if (existingItem) {
         return previousItems.map((cartItem) =>
           cartItem.id === item.id
-            ? {
-                ...cartItem,
-                quantity: cartItem.quantity + 1,
-              }
+            ? { ...cartItem, quantity: cartItem.quantity + 1 }
             : cartItem
         );
       }
 
-      return [
-        ...previousItems,
-        { ...item, quantity: 1 },
-      ];
+      return [...previousItems, { ...item, quantity: 1 }];
     });
   }
 
@@ -99,7 +92,7 @@ function App() {
   // Place customer order through backend
   async function placeOrder(orderDetails) {
     try {
-    const response = await fetch(`${API_URL}/api/orders`, {
+      const response = await fetch(`${API_URL}/api/orders`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -115,15 +108,11 @@ function App() {
 
       const savedOrder = data.order;
 
-      setOrders((previousOrders) => [
-        ...previousOrders,
-        savedOrder,
-      ]);
-
+      setOrders((previousOrders) => [...previousOrders, savedOrder]);
       setCompletedOrder(savedOrder);
       setCartItems([]);
       setShowCheckout(false);
-
+      navigate("/cart");
     } catch (error) {
       console.error("Error placing order:", error);
       alert(error.message || "Something went wrong. Please try again.");
@@ -134,6 +123,7 @@ function App() {
   function startNewOrder() {
     setCompletedOrder(null);
     setShowCheckout(false);
+    navigate("/menu");
   }
 
   const cartCount = cartItems.reduce(
@@ -145,82 +135,67 @@ function App() {
     <div>
       <Navbar cartCount={cartCount} />
 
-      <div style={{ padding: "15px 7%", backgroundColor: "#fffaf3" }}>
-        <a
-          href="#staff-dashboard"
-          style={{ color: "#754c35", fontWeight: "bold" }}
-        >
-          Staff Dashboard
-        </a>
-      </div>
+      <Routes>
+        <Route path="/" element={<Home />} />
 
-      <section className="hero" id="home">
-        <div className="hero-content">
-          <p className="hero-subtitle">
-            WELCOME TO THE DAILY CUP
-          </p>
-
-          <h1>
-            Your Daily Dose of
-            <span> Happiness.</span>
-          </h1>
-
-          <p className="hero-description">
-            Enjoy freshly brewed coffee, delicious pastries
-            and refreshing drinks. Every cup is made with love.
-          </p>
-
-          <a href="#menu" className="hero-button">
-            Explore Our Menu
-          </a>
-        </div>
-
-        <div className="hero-image">
-          <img
-            src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=900"
-            alt="Freshly brewed coffee"
-          />
-        </div>
-      </section>
-
-      <Menu
-        menuItems={menuItems}
-        onAddToCart={addToCart}
-      />
-
-      {completedOrder ? (
-        <OrderConfirmation
-          order={
-            orders.find(
-              (order) =>
-                order.orderNumber === completedOrder.orderNumber
-            ) || completedOrder
+        <Route
+          path="/menu"
+          element={
+            <Menu
+              menuItems={menuItems}
+              onAddToCart={addToCart}
+            />
           }
-          onNewOrder={startNewOrder}
         />
-      ) : showCheckout ? (
-        <Checkout
-          cartItems={cartItems}
-          onPlaceOrder={placeOrder}
-          onCancel={() => setShowCheckout(false)}
-        />
-      ) : (
-        <Cart
-          cartItems={cartItems}
-          onUpdateQuantity={updateQuantity}
-          onRemove={removeItem}
-          onCheckout={() => setShowCheckout(true)}
-        />
-      )}
 
-      <section id="staff-dashboard">
-        <StaffDashboard
-          menuItems={menuItems}
-          setMenuItems={setMenuItems}
-          orders={orders}
-          setOrders={setOrders}
+        <Route path="/about" element={<About />} />
+
+        <Route path="/contact" element={<Contact />} />
+
+        <Route
+          path="/cart"
+          element={
+            completedOrder ? (
+              <OrderConfirmation
+                order={
+                  orders.find(
+                    (order) =>
+                      order.orderNumber === completedOrder.orderNumber
+                  ) || completedOrder
+                }
+                onNewOrder={startNewOrder}
+              />
+            ) : showCheckout ? (
+              <Checkout
+                cartItems={cartItems}
+                onPlaceOrder={placeOrder}
+                onCancel={() => setShowCheckout(false)}
+              />
+            ) : (
+              <Cart
+                cartItems={cartItems}
+                onUpdateQuantity={updateQuantity}
+                onRemove={removeItem}
+                onCheckout={() => setShowCheckout(true)}
+              />
+            )
+          }
         />
-      </section>
+
+        <Route
+          path="/staff-dashboard"
+          element={
+            <StaffDashboard
+              menuItems={menuItems}
+              setMenuItems={setMenuItems}
+              orders={orders}
+              setOrders={setOrders}
+            />
+          }
+        />
+
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
     </div>
   );
 }
