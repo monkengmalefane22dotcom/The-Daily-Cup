@@ -15,10 +15,6 @@ function Home() {
           Enjoy freshly brewed coffee, delicious pastries
           and refreshing drinks. Every cup is made with love.
         </p>
-
-        <a href="/menu" className="hero-button">
-          Explore Our Menu
-        </a>
       </div>
 
       <div className="hero-image">
