@@ -15,7 +15,6 @@ function Cart({ cartItems, onUpdateQuantity, onRemove, onCheckout }) {
 
       {cartItems.length === 0 ? (
         <div className="empty-cart">
-          <span>🛒</span>
           <h3>Your cart is empty</h3>
           <p>Add something delicious from our menu!</p>
           <a href="#menu">Explore Menu</a>

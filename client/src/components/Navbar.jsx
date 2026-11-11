@@ -5,7 +5,6 @@ function Navbar({ cartCount = 0 }) {
   return (
     <nav className="navbar">
       <div className="navbar-logo">
-        <span className="coffee-icon">☕</span>
         <h2>The Daily Cup</h2>
       </div>
 
@@ -18,8 +17,8 @@ function Navbar({ cartCount = 0 }) {
       </div>
 
       <Link to="/cart" className="cart-button">
-        🛒 Cart ({cartCount})
-      </Link>
+  Cart ({cartCount})
+</Link>
     </nav>
   );
 }
