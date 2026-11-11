@@ -18,6 +18,14 @@ app.get("/", (req, res) => {
   res.send("Welcome to The Daily Cup API!");
 });
 
+// Health check route
+app.get("/api/health", (req, res) => {
+  res.status(200).json({
+    status: "OK",
+    message: "The Daily Cup API is healthy!"
+  });
+});
+
 // API routes
 app.use("/api/menu", menuRoutes);
 app.use("/api/orders", orderRoutes);
